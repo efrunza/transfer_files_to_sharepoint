@@ -87,7 +87,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }     
         {
           name: 'BlobStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=cs2100320034f236651;AccountKey===;EndpointSuffix=core.windows.net'
+          value: ''
         }    
         {
           name: 'CertificateFromKV'
@@ -95,11 +95,11 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }     
         {
           name: 'CertificateThumbPrint'
-          value: '4b3a6c18400ba1b815cdae1a454bdf94c91d8335'
+          value: ''
         }  
         {
           name: 'ClientId'
-          value: '6732d354-3aed-4d24-ac70-edcd0493da2e'
+          value: ''
         }     
         {
           name: 'DownloadScope'
