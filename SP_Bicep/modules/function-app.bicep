@@ -87,7 +87,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }     
         {
           name: 'BlobStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=cs2100320034f236651;AccountKey=L/IVS3U1FhjKrIDXoHmkWe/y8UH/FzIvp7RrHUYUePtl3zeMYO3GoG4ObhSqVKOxMsMMTZQRONvo+AStpzDiHQ==;EndpointSuffix=core.windows.net'
+          value: 'DefaultEndpointsProtocol=https;AccountName=cs2100320034f236651;AccountKey===;EndpointSuffix=core.windows.net'
         }    
         {
           name: 'CertificateFromKV'
