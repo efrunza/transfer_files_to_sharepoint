@@ -64,7 +64,7 @@ namespace Demo.AzureFunction
 
             //var clientCredential = new ClientCertificateCredential(TenantId, ClientId, clientCertificate, options);
 
-            var clientCredential = new ClientSecretCredential(TenantId, ClientId, "VN98Q~jghhY5jFsUmahr0kfMa6T7tJ9mRwwCwdiu", options);  
+            var clientCredential = new ClientSecretCredential(TenantId, ClientId, "", options);  
 
             var graphClient = new GraphServiceClient(clientCredential, scopes);
             */
