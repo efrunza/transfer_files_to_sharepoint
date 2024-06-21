@@ -1,0 +1,83 @@
+# .NET Core Function App to Windows on Azure
+# Build a .NET Core function app and deploy it to Azure as a Windows function App.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  - main
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: "e0384113-59b8-4943-a11d-37217862d215"
+
+  # Function app name
+  functionAppName: "func-testbp-dev-004"
+
+  # Agent VM image name
+  vmImageName: "windows-2019"
+
+  # Working Directory
+  workingDirectory: "$(System.DefaultWorkingDirectory)/Demo.AzureFunction"
+
+stages:
+  - stage: Build
+    displayName: Build stage
+
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
+
+        steps:
+          - task: CopyFiles@1
+            displayName: "Copy deployment parameters file"
+            inputs:
+              Contents: "**/devops/bicep/*.json"
+              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+          - task: CopyFiles@1
+            displayName: "Copy PS scripts"
+            inputs:
+              Contents: "**/devops/*.ps1"
+              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+          - task: CopyFiles@2
+            displayName: "Copy bicep files"
+            inputs:
+              Contents: "**/devops/**/*.bicep"
+              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+              OverWrite: true
+
+          - task: PowerShell@2
+            displayName: "Install latest version of the Bicep CLI"
+            inputs:
+              filePath: '$(Build.ArtifactStagingDirectory)\devops\install-bicep.ps1'
+              workingDirectory: "$(Build.ArtifactStagingDirectory)"
+
+          - task: CmdLine@2
+            displayName: "Compile Bicep to ARM Template"
+            inputs:
+              script: bicep.exe build $(Build.ArtifactStagingDirectory)\devops\bicep\main_test.bicep
+
+          - task: DotNetCoreCLI@2
+            displayName: Build
+            inputs:
+              command: "build"
+              projects: |
+                $(workingDirectory)/*.csproj
+              arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
+
+          - task: ArchiveFiles@2
+            displayName: "Archive files"
+            inputs:
+              rootFolderOrFile: "$(System.DefaultWorkingDirectory)/publish_output"
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              replaceExistingArchive: true
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish build artifacts'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+
+

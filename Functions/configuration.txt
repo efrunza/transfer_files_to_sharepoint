@@ -1,0 +1,10 @@
+
+
+$(System.DefaultWorkingDirectory)/_SSO/drop/DevOps/bicep/main_test.json
+
+-environment "dev" -location "Canada East" -appName "testbp" -instanceNumber "008" -apiVersion "v1" -storageAccountSku "Standard_LRS" -appServicePlanName "ASP-EFLogicAppgroup-8ef4" -appServicePlanGroup "EFLogicApp_group"
+
+Azure Function App Deploy: func-testbp-dev-$(instanceNumber)
+
+$(System.DefaultWorkingDirectory)/_SSO/drop/38.zip
+
