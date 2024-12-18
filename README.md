@@ -18,3 +18,5 @@ Details about this project can be read in my blog's articles here:
 ## Context
 I have done this work in 2024. The main technologies used were: **.NET Core**, **Graph API**, **Bicep scripts**, and a variety of **Azure resources**.
 
+TestCheckInDevPumaVM
+
